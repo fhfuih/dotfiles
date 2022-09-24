@@ -40,6 +40,9 @@ vim.wo.conceallevel = 2
 -- Pagniation & scrolling
 vim.o.scrolloff = 5
 
+-- Language-specific
+vim.g.tex_flavor = 'latex'
+
 -- Providers
 vim.g.python3_host_prog = '/usr/bin/python3'
 -- vim.g.node_host_prog = '/Users/zeyu/Library/pnpm/node'

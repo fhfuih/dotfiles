@@ -61,7 +61,13 @@ setup_lsp{
   'tsserver',
   'pyright',
   'gopls',
-  'texlab',
+  {
+    'texlab',
+    chktex = {
+      onEdit = true,
+      onOpenAndSave = true
+    },
+  },
   'ltex',
   {
     'yamlls',

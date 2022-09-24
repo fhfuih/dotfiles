@@ -1,8 +1,9 @@
 local feline_vi = require("feline.providers.vi_mode")
 local feline_cursor = require("feline.providers.cursor")
+local feline_lsp = require("feline.providers.lsp")
 local palette = require('nightfox.palette').load('nightfox')
 local spec = require('nightfox.spec').load('nightfox')
-local lsp_status = require('lsp-status')
+-- local lsp_status = require('lsp-status')
 
 ---- feline keyword
 -- { "violet", "yellow", "fg", "red", "orange", "black", "bg", "green", "oceanblue", "cyan", "magenta", "skyblue", "white" }
@@ -66,26 +67,32 @@ local c = {
   lsp_name = {
     provider = 'lsp_client_names',
   },
-  lsp_status = {
-    provider = function ()
-      return lsp_status.status()
-    end,
-    hl = {
-      name = 'SLLspStatus',
-      bg = palette.white.dim,
-      fg = 'bg',
-    },
-    left_sep = {
-      str = 'left_filled',
-      hl = {
-        name = 'SLLspStatusLeft',
-        fg = palette.white.dim,
-      },
-      always_visible = true,
-    },
-  },
+  -- lsp_status = {
+  --   provider = function ()
+  --     return lsp_status.status()
+  --   end,
+  --   hl = {
+  --     name = 'SLLspStatus',
+  --     bg = palette.white.dim,
+  --     fg = 'bg',
+  --   },
+  --   left_sep = {
+  --     str = 'left_filled',
+  --     hl = {
+  --       name = 'SLLspStatusLeft',
+  --       fg = palette.white.dim,
+  --     },
+  --     always_visible = true,
+  --   },
+  -- },
   diag_errors = {
-    provider = 'diagnostic_errors',
+    provider = function ()
+      local count = feline_lsp.diagnostic_errors()
+      if count ~= '' then
+        count = ' ' .. count .. ' '
+      end
+      return count
+    end,
     icon = '',
     hl = {
       name = 'SLError',
@@ -242,7 +249,7 @@ local components = {
         c.empty,
       },
       {
-        c.lsp_status,
+        -- c.lsp_status,
         c.diag_errors,
         c.diag_warnings,
         c.diag_info,
