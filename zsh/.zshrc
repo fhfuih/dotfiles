@@ -1,3 +1,5 @@
+export IS_INTERACTIVE="1"
+
 # vim: foldmethod=marker foldmarker=>>>,<<<
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
@@ -11,6 +13,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 alias cur="cd OneDrive\\ -\\ HKUST\\ Connect/Curriculum"
 alias p="ALL_PROXY=socks5://localhost:7890"
 alias gi="git-ignore"
+alias s="kitty +kitten ssh"
 
 # >>> zinit >>>
 ### Added by Zinit's installer
@@ -97,8 +100,6 @@ fi
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # <<< brew autojump <<<
 
-export PNPM_HOME="/Users/zeyu/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
