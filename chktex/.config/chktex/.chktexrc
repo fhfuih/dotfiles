@@ -1,0 +1,7 @@
+Linker {
+  \nameref \autoref \hyperref
+}
+
+PostLink = {
+  \index
+}
