@@ -1,6 +1,7 @@
+# vim: foldmethod=marker foldmarker=>>>,<<<
+
 export IS_INTERACTIVE="1"
 
-# vim: foldmethod=marker foldmarker=>>>,<<<
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
@@ -64,15 +65,6 @@ fi
 # spaceship prompt
 export SPACESHIP_EXEC_TIME_SHOW=false
 eval spaceship_vi_mode_enable
-
-
-# kitty integration
-# if test -n "$KITTY_INSTALLATION_DIR"; then
-#     export KITTY_SHELL_INTEGRATION="enabled"
-#     autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-#     kitty-integration
-#     unfunction kitty-integration
-# fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

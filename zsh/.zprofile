@@ -1,5 +1,7 @@
 export IS_LOGIN="1"
 
+# export LANG="zh_CN.UTF-8"
+
 # homebrew
 if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
