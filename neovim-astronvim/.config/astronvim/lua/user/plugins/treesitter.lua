@@ -12,11 +12,16 @@ return {
   },
   -- Indentation based on treesitter for the = operator. NOTE: This is an experimental feature.
   indent = {
-    enable = true
+    enable = true,
+  },
+  highlight = {
+    disable = {
+      "latex",
+    },
   },
   rainbow = {
     disable = {
-      "latex"
-    }
-  }
+      "latex",
+    },
+  },
 }

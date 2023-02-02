@@ -27,8 +27,12 @@ return {
   --   foldenable = false,
   -- },
   g = {
+    -- vim built-in
     mapleader = " ",
     tex_flavor = "latex",
+
+    -- vimtex
+    vimtex_view_method = "skim",
 
     -- below are examples
     autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)

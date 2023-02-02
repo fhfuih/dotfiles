@@ -1,26 +1,15 @@
 return {
+  -- General text-editing
   ["kylechui/nvim-surround"] = {
     tag = "*",
     config = function()
       require("nvim-surround").setup()
     end,
   },
-  ["rafcamlet/nvim-luapad"] = {
-    cmd = { "Luapad", "LuaRun" },
-  },
-  ["barreiroleo/ltex_extra.nvim"] = {},
-  ["f3fora/nvim-texlabconfig"] = {
+  ["ggandor/leap.nvim"] = {
     config = function()
-      require("texlabconfig").setup()
+      require("leap").add_default_mappings()
     end,
-    -- ft = { 'tex', 'bib' },
-    run = "go build -o ~/.local/bin/",
-  },
-  ["ThePrimeagen/refactoring.nvim"] = {
-    requires = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
-    },
   },
   ["folke/zen-mode.nvim"] = {
     cmd = { "ZenMode" },
@@ -28,9 +17,34 @@ return {
       require("zen-mode").setup()
     end,
   },
-  ["ggandor/leap.nvim"] = {
+  -- completion
+  ["hrsh7th/cmp-omni"] = {
     config = function()
-      require("leap").add_default_mappings()
+      astronvim.add_cmp_source("omni")
     end,
+  },
+  -- Lsp
+  ["ThePrimeagen/refactoring.nvim"] = {
+    requires = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+  },
+  ["barreiroleo/ltex_extra.nvim"] = {},
+  ["f3fora/nvim-texlabconfig"] = {
+    disable = true,
+    config = function()
+      require("texlabconfig").setup()
+    end,
+    ft = { "tex", "bib" },
+    run = "go build -o ~/.local/bin/",
+  },
+  -- Non-lsp language support
+  ["lervag/vimtex"] = {
+    disable = true,
+  },
+  -- Debug
+  ["rafcamlet/nvim-luapad"] = {
+    cmd = { "Luapad", "LuaRun" },
   },
 }
