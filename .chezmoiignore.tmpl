@@ -1,0 +1,18 @@
+README.md
+/**/lazy-lock.json
+
+{{ if eq .chezmoi.os "windows" }}
+.config/chktex/.chktexrc
+{{ else }}
+.config/chktex/chktexrc
+{{ end }}
+
+{{- if eq .chezmoi.os "windows" }}
+.bash*
+.zshenv
+.config/zsh
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+.hammerspoon
+{{- end }}

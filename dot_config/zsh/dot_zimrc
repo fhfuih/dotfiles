@@ -1,0 +1,5 @@
+zmodule romkatv/powerlevel10k --use degit
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions

@@ -1,0 +1,3 @@
+[".vim/pack/tpope/start/vim-sensible"]
+    type = "git-repo"
+    url = "https://github.com/tpope/vim-sensible.git"

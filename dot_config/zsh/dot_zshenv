@@ -1,0 +1,8 @@
+export FPATH="$HOME/.zsh_completions:$FPATH"
+export PATH="$HOME/.local/bin:$PATH"
+export VISUAL=nvim
+
+# Program-specific configs
+export CHKTEXRC="$HOME/.config/chktex"
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+
