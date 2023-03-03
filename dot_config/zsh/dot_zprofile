@@ -13,10 +13,14 @@ if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
 fi
 
 # java
-export JAVA_HOME="$(/usr/libexec/java_home)"
+if which libexec >/dev/null-s $(which zsh) $(whoami); then
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+fi
 
 # rust
-. "$HOME/.cargo/env"
+if [[ -e "$HOME/.cargo.env"]]
+    . "$HOME/.cargo/env"
+fi
 
 # go
 export PATH="$HOME/go/bin:$PATH"
