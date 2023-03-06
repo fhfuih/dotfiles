@@ -123,6 +123,9 @@ return {
         changedelete = { text = "▎" },
         untracked = { text = "▎" },
       },
+      on_attach = function(buffer)
+        keymaps.gitsigns.config(buffer)
+      end,
     },
   },
   -- {

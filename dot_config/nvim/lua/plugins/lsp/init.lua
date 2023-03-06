@@ -31,14 +31,11 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      -- setup autoformat
-      -- require("lazyvim.plugins.lsp.format").autoformat = opts.autoformat
-      -- setup formatting and keymaps
+      require("plugins.lsp.format").autoformat = opts.autoformat
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local buffer = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
-          -- on_attach(client, buffer)
           require("plugins.lsp.format").on_attach(client, buffer)
           require("plugins.lsp.keymaps").on_attach(client, buffer)
         end,

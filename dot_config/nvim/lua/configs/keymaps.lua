@@ -185,6 +185,55 @@ local M = {
       }
     end,
   },
+  gitsigns = {
+    config = function(buffer)
+      local gs = package.loaded.gitsigns
+      local keymaps = {
+        {
+          "]c",
+          function()
+            if vim.wo.diff then
+              return "]c"
+            end
+            vim.schedule(function()
+              gs.next_hunk()
+            end)
+            return "<Ignore>"
+          end,
+          expr = true,
+        },
+        {
+          "]c",
+          function()
+            if vim.wo.diff then
+              return "[c"
+            end
+            vim.schedule(function()
+              gs.prev_hunk()
+            end)
+            return "<Ignore>"
+          end,
+          expr = true,
+        },
+        {
+          "<leader>ghs",
+          "<cmd>Gitsigns stage_hunk<CR>",
+          desc = "Stage Hunk",
+          mode = { "n", "v'" },
+        },
+        {
+          "<leader>ghr",
+          "<cmd>Gitsigns reset_hunk<CR>",
+          desc = "Reset Hunk",
+          mode = { "n", "v'" },
+        },
+      }
+      for _, v in ipairs(keymaps) do
+        v.buffer = buffer
+        load_keymap(v)
+      end
+    end,
+  },
   session = {
     config = function()
       local keymaps = {
@@ -195,15 +244,26 @@ local M = {
       end
     end,
   },
-    -- stylua: ignore
-    ["todo-comments"] = {
-        lazy = {
-            { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-            { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-            { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-            { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
-        },
+  ["todo-comments"] = {
+    lazy = {
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous todo comment",
+      },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
     },
+  },
   treesitter = {
     config = {
       incremental_selection = {
