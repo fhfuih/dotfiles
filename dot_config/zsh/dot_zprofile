@@ -1,6 +1,5 @@
-export IS_LOGIN="1"
-
-# export LANG="zh_CN.UTF-8"
+export HAS_ZPROFILE=true
+export IS_LOGIN=true
 
 # homebrew
 if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
@@ -13,12 +12,12 @@ if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
 fi
 
 # java
-if which libexec >/dev/null-s $(which zsh) $(whoami); then
+if [[ -e "/usr/libexec/java_home" ]]; then
     export JAVA_HOME="$(/usr/libexec/java_home)"
 fi
 
 # rust
-if [[ -e "$HOME/.cargo.env"]]
+if [[ -e "$HOME/.cargo.env" ]]; then
     . "$HOME/.cargo/env"
 fi
 
@@ -27,6 +26,7 @@ export PATH="$HOME/go/bin:$PATH"
 
 # ruby
 if which ruby >/dev/null && which gem >/dev/null; then
+# if { which ruby >/dev/null; } && { which gem >/dev/null; }; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
