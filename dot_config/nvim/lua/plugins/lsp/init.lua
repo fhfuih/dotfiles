@@ -48,52 +48,17 @@ return {
       -- end
       vim.diagnostic.config(opts.diagnostics)
 
-      -- Get all the server configs from servers.lua
-      -- If the tool is not managed by mason, set the server up directly
-      -- Otherwise, ask mason to set up the tools, then set the server up
-      -- The server setup is to assign capabilities, call fallbacks, and call lspconfig if necessary.
-      local servers = require("plugins.lsp.servers")
-      local server_setup = require("plugins.lsp.server-setup")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-      local function setup(server)
-        local server_opts = servers[server] or {}
-        server_opts.capabilities = capabilities
-        if server_setup[server] then
-          if server_setup[server](server, server_opts) then
-            return
-          end
-        elseif server_setup["*"] then
-          if server_setup["*"](server, server_opts) then
-            return
-          end
-        end
-        require("lspconfig")[server].setup(server_opts)
-      end
-
-      local function noop() end
-
-      local mlsp = require("mason-lspconfig")
-      local available = mlsp.get_available_servers()
-
-      local ensure_installed = {} ---@type string[]
-      local setup_handlers = { setup }
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(available, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        else
-          setup_handlers[server] = noop
-        end
-      end
-
-      require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
+      -- Let mason set up all mason-installed servers
+      local setup_handlers = require("plugins.lsp.server-setup")
       require("mason-lspconfig").setup_handlers(setup_handlers)
+
+      -- Manually set up all the other servers
+      local servers = require("plugins.lsp.servers")
+      for server_name, server_opts in pairs(servers) do
+        if server_opts.mason == false then
+          (setup_handlers[server_name] or setup_handlers[1])(server_name)
+        end
+      end
     end,
   },
   {
@@ -157,6 +122,7 @@ return {
       "LspInstall",
       "LspUninstall",
     },
+    config = true,
     dependencies = {
       "williamboman/mason.nvim",
     },

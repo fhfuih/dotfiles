@@ -154,7 +154,7 @@ return function(_, _)
     hl = { fg = "red", bold = true },
   }
 
-  ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode, Snippets })
+  ViMode = utils.surround({ " ", "" }, "bright_bg", { ViMode, Snippets })
 
   local FileName = {
     provider = function(self)

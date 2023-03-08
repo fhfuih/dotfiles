@@ -9,6 +9,8 @@ fi
 # zmodload zsh/zprof
 export HAS_ZSHRC=true
 export IS_INTERACTIVE=true
+export RC="$0"
+alias reload="source $RC"
 
 # Completion configs
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -38,6 +40,12 @@ source "${ZDOTDIR:-${HOME}}/zim-bootstrap.zsh"
 
 # alias
 source "$HOME/.config/sh/alias.sh"
+
+function texdoc() {
+  open "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
+  # or xdg-open ...
+}
+
 # My own plugin config
 # zinit light zdharma-continuum/history-search-multi-word
 # zinit light zsh-users/zsh-autosuggestions

@@ -18,6 +18,7 @@ return {
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
       if vim.fn.argc() == 1 then
+        ---@diagnostic disable-next-line: param-type-mismatch
         local stat = vim.loop.fs_stat(vim.fn.argv(0))
         if stat and stat.type == "directory" then
           require("neo-tree")
@@ -31,9 +32,7 @@ return {
         follow_current_file = true,
       },
       window = {
-        mappings = {
-          ["<space>"] = "none",
-        },
+        mappings = keymaps["neo-tree"].config.default,
       },
     },
     dependencies = {
@@ -51,25 +50,7 @@ return {
       defaults = {
         prompt_prefix = " ",
         selection_caret = " ",
-        mappings = {
-          i = {
-            ["<c-t>"] = function(...)
-              return require("trouble.providers.telescope").open_with_trouble(...)
-            end,
-            ["<a-i>"] = function()
-              Util.telescope("find_files", { no_ignore = true })()
-            end,
-            ["<a-h>"] = function()
-              Util.telescope("find_files", { hidden = true })()
-            end,
-            ["<C-Down>"] = function(...)
-              return require("telescope.actions").cycle_history_next(...)
-            end,
-            ["<C-Up>"] = function(...)
-              return require("telescope.actions").cycle_history_prev(...)
-            end,
-          },
-        },
+        mappings = keymaps.telescope.config,
       },
     },
     dependencies = {
@@ -87,28 +68,7 @@ return {
     config = function(_, opts)
       local wk = require("which-key")
       wk.setup(opts)
-      wk.register({
-        mode = { "n", "v" },
-        ["g"] = { name = "+goto" },
-        ["gz"] = { name = "+surround" },
-        ["]"] = { name = "+next" },
-        ["["] = { name = "+prev" },
-        ["<leader><tab>"] = { name = "+tabs" },
-        ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file/find" },
-        ["<leader>g"] = { name = "+git" },
-        ["<leader>gh"] = { name = "+hunks" },
-        ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
-        ["<leader>sn"] = { name = "+noice" },
-        ["<leader>u"] = { name = "+ui" },
-        ["<leader>w"] = { name = "+windows" },
-        ["<leader>x"] = { name = "+diagnostics/quickfix" },
-      })
-      wk.register({
-        e = { "<cmd>Neotree toggle<CR>", "Toggle Neotree" },
-      }, { prefix = "<leader>" })
+      wk.register(keymaps["which-key"].config())
     end,
   },
   {
@@ -124,7 +84,7 @@ return {
         untracked = { text = "▎" },
       },
       on_attach = function(buffer)
-        keymaps.gitsigns.config(buffer)
+        -- keymaps.gitsigns.config(buffer)
       end,
     },
   },

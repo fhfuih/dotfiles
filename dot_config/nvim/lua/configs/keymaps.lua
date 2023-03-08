@@ -184,37 +184,56 @@ local M = {
         },
       }
     end,
+    config = {
+      i = {
+        -- ["<c-t>"] = function(...)
+        --   return require("trouble.providers.telescope").open_with_trouble(...)
+        -- end,
+        -- ["<a-i>"] = function()
+        --   Util.telescope("find_files", { no_ignore = true })()
+        -- end,
+        -- ["<a-h>"] = function()
+        --   Util.telescope("find_files", { hidden = true })()
+        -- end,
+        ["<C-j>"] = function(...)
+          return require("telescope.actions").cycle_history_next(...)
+        end,
+        ["<C-k>"] = function(...)
+          return require("telescope.actions").cycle_history_prev(...)
+        end,
+      },
+    },
   },
   gitsigns = {
     config = function(buffer)
       local gs = package.loaded.gitsigns
       local keymaps = {
-        {
-          "]c",
-          function()
-            if vim.wo.diff then
-              return "]c"
-            end
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return "<Ignore>"
-          end,
-          expr = true,
-        },
-        {
-          "]c",
-          function()
-            if vim.wo.diff then
-              return "[c"
-            end
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return "<Ignore>"
-          end,
-          expr = true,
-        },
+        -- {
+        --   "]c",
+        --   function()
+        --     if vim.wo.diff then
+        --       return "]c"
+        --     end
+        --     vim.schedule(function()
+        --       gs.next_hunk()
+        --     end)
+        --     return "<Ignore>"
+        --   end,
+        --   expr = true,
+        -- },
+        -- {
+        --   "]c",
+        --   function()
+        --     if vim.wo.diff then
+        --       return "[c"
+        --     end
+        --     vim.schedule(function()
+        --       gs.prev_hunk()
+        --     end)
+        --     return "<Ignore>"
+        --   end,
+        --   expr = true,
+        -- },
         {
           "<leader>ghs",
           "<cmd>Gitsigns stage_hunk<CR>",
@@ -265,6 +284,10 @@ local M = {
     },
   },
   treesitter = {
+    lazy = {
+      { "<CR>", desc = "Increment selection" },
+      { "<bs>", desc = "Schrink selection", mode = "x" },
+    },
     config = {
       incremental_selection = {
         init_selection = "<CR>",
@@ -272,7 +295,62 @@ local M = {
         scope_incremental = "<Tab>",
         node_decremental = "<bs>",
       },
+      textobjects = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+      },
     },
+  },
+  ["neo-tree"] = {
+    config = {
+      default = {
+        ["<space>"] = "none",
+      },
+    },
+  },
+  alpha = {
+    config = {
+      { "<CR>", "<cmd>SessionManager load_current_dir_session<CR>", desc = "Load Current Session" },
+      { "f", "<leader>ff", desc = "  Find file" },
+      { "n", "<cmd>ene <BAR> startinsert <CR>", desc = "  New file" },
+      { "s", "<cmd>SessionManager load_session<cr>", desc = "勒 Find Session" },
+      { "r", "<cmd>Telescope oldfiles <CR>", desc = "  Recent files" },
+      { "g", "<cmd>Telescope live_grep <CR>", desc = "  Find text" },
+      -- { "c", "<cmd>e $MYVIMRC <CR>", desc = "  Config" },
+      { "l", "<cmd>Lazy<CR>", desc = "鈴 Lazy" },
+      { "q", "<cmd>qa<CR>", desc = "  Quit" },
+    },
+  },
+  ["which-key"] = {
+    config = function()
+      local km = {
+        mode = { "n", "v" },
+        ["g"] = { name = "+goto" },
+        ["gz"] = { name = "+surround" },
+        ["]"] = { name = "+next" },
+        ["["] = { name = "+prev" },
+        ["<leader><tab>"] = { name = "+tabs" },
+        ["<leader>b"] = { name = "+buffer" },
+        ["<leader>c"] = { name = "+code" },
+        ["<leader>f"] = { name = "+file/find" },
+        ["<leader>g"] = { name = "+git" },
+        ["<leader>gh"] = { name = "+hunks" },
+        ["<leader>q"] = { name = "+quit/session" },
+        ["<leader>s"] = { name = "+search" },
+        ["<leader>u"] = { name = "+ui" },
+        ["<leader>w"] = { name = "+windows" },
+        ["<leader>x"] = { name = "+diagnostics/quickfix" },
+      }
+      if Utils.has("noice.nvim") then
+        km["<leader>sn"] = { name = "+noice" }
+      end
+      return km
+    end,
   },
   notify = {
     lazy = {
@@ -338,19 +416,6 @@ local M = {
         expr = true,
         desc = "Scroll backward",
       },
-    },
-  },
-  alpha = {
-    config = {
-      { "<CR>", "<cmd>SessionManager load_current_dir_session<CR>", desc = "Load Current Session" },
-      { "f", "<leader>ff", desc = "  Find file" },
-      { "n", "<cmd>ene <BAR> startinsert <CR>", desc = "  New file" },
-      { "s", "<cmd>SessionManager load_session<cr>", desc = "勒 Find Session" },
-      { "r", "<cmd>Telescope oldfiles <CR>", desc = "  Recent files" },
-      { "g", "<cmd>Telescope live_grep <CR>", desc = "  Find text" },
-      -- { "c", "<cmd>e $MYVIMRC <CR>", desc = "  Config" },
-      { "l", "<cmd>Lazy<CR>", desc = "鈴 Lazy" },
-      { "q", "<cmd>qa<CR>", desc = "  Quit" },
     },
   },
 }

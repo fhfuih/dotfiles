@@ -17,6 +17,7 @@ alias up='git pull'
 alias fuckyou='git push -f'
 alias fuckme='git pull -f'
 alias gig='git-ignore'
+alias lg='lazygit'
 
 alias lvim="XDG_CONFIG_HOME=$HOME/.neovim-distro/lazyvim nvim"
 alias avim="XDG_CONFIG_HOME=$HOME/.neovim-distro/astronvim nvim"
@@ -27,6 +28,8 @@ alias cza='chezmoi add'
 alias czp='chezmoi apply'
 alias cze='chezmoi edit'
 alias czs='chezmoi status'
-alias czc='chezmoi cd'
 alias czg='chezmoi git'
 alias czfuck='chezmoi re-add'
+function czc() {
+  cd $(chezmoi source-path)
+}
