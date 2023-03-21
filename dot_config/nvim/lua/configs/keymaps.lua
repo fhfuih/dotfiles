@@ -28,12 +28,19 @@ end
 
 local M = {
   general = {
-    { "j", "v:count == 0 ? 'gj' : 'j'", expr = true },
-    { "k", "v:count == 0 ? 'gk' : 'k'", expr = true },
-    { "<S-h>", "<C-w>h", desc = "Go to left window" },
-    { "<S-j>", "<C-w>j", desc = "Go to lower window" },
-    { "<S-k>", "<C-w>k", desc = "Go to upper window" },
-    { "<S-l>", "<C-w>l", desc = "Go to right window" },
+    { "j", "gj" },
+    { "k", "gk" },
+    -- { "j", "v:count == 0 ? 'gj' : 'j'", expr = true },
+    -- { "k", "v:count == 0 ? 'gk' : 'k'", expr = true },
+    { "<esc>", "<cmd>noh<cr><esc>", desc = "Escape and clear hlsearch", mode = { "i", "n" } },
+    { "<C-h>", Utils.move_left, desc = "Go to left window or previous tab" },
+    { "<C-j>", Utils.move_down, desc = "Go to lower window or next tab" },
+    { "<C-k>", Utils.move_up, desc = "Go to upper window or previous tab" },
+    { "<C-l>", Utils.move_right, desc = "Go to right window or next tab" },
+    -- { "<S-h>", "<C-w>h", desc = "Go to left window" },
+    -- { "<S-j>", "<C-w>j", desc = "Go to lower window" },
+    -- { "<S-k>", "<C-w>k", desc = "Go to upper window" },
+    -- { "<S-l>", "<C-w>l", desc = "Go to right window" },
     { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase window height" },
     { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease window height" },
     { "<C-Left>", "<cmd>vertical resize -2<cr>", desc = "Decrease window width" },
@@ -139,6 +146,17 @@ local M = {
         {
           "<leader>ff",
           find_file_or_session,
+          desc = "Find Files (root dir)",
+        },
+        {
+          "<leader>fF",
+          function()
+            require("telescope.builtin").find_files({
+              hidden = true,
+              no_ignore = true,
+              no_ignore_parent = true,
+            })
+          end,
           desc = "Find Files (root dir)",
         },
         -- { "<leader>fF", Utils.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
@@ -312,15 +330,33 @@ local M = {
         ["<space>"] = "none",
       },
     },
+    lazy = {
+      {
+        "<leader>fe",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = Utils.get_root() })
+        end,
+        desc = "Explorer NeoTree (root dir)",
+      },
+      {
+        "<leader>fE",
+        function()
+          require("neo-tree.command").execute({ toggle = true })
+        end,
+        desc = "Explorer NeoTree (cwd)",
+      },
+      { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
+      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+    },
   },
   alpha = {
     config = {
-      { "<CR>", "<cmd>SessionManager load_current_dir_session<CR>", desc = "Load Current Session" },
-      { "f", "<leader>ff", desc = "  Find file" },
-      { "n", "<cmd>ene <BAR> startinsert <CR>", desc = "  New file" },
-      { "s", "<cmd>SessionManager load_session<cr>", desc = "勒 Find Session" },
-      { "r", "<cmd>Telescope oldfiles <CR>", desc = "  Recent files" },
-      { "g", "<cmd>Telescope live_grep <CR>", desc = "  Find text" },
+      { "<CR>", "<cmd>SessionManager load_current_dir_session<CR>", desc = "  Load Current Session" },
+      { "f", "<cmd>Telescope find_files<CR>", desc = "  Find file" },
+      { "n", "<cmd>ene <BAR> startinsert <CR>", desc = "  New file" },
+      { "s", "<cmd>SessionManager load_session<cr>", desc = "  Find Session" },
+      { "r", "<cmd>Telescope oldfiles <CR>", desc = "  Recent files" },
+      -- { "g", "<cmd>Telescope live_grep <CR>", desc = "  Find text" },
       -- { "c", "<cmd>e $MYVIMRC <CR>", desc = "  Config" },
       { "l", "<cmd>Lazy<CR>", desc = "鈴 Lazy" },
       { "q", "<cmd>qa<CR>", desc = "  Quit" },

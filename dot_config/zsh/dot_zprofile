@@ -17,12 +17,12 @@ if [[ -e "/usr/libexec/java_home" ]]; then
 fi
 
 # rust
-if [[ -e "$HOME/.cargo.env" ]]; then
+if [[ -e "$HOME/.cargo/env" ]]; then
     . "$HOME/.cargo/env"
 fi
 
 # go
-export PATH="$HOME/go/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"
 
 # ruby
 if which ruby >/dev/null && which gem >/dev/null; then
@@ -30,6 +30,9 @@ if which ruby >/dev/null && which gem >/dev/null; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+# node manager
+if which fnm >/dev/null; then
+    eval "$(fnm env --use-on-cd)"
+fi
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PATH:$PNPM_HOME"

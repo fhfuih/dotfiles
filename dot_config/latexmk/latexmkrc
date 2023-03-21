@@ -1,0 +1,4 @@
+# $dvi_mode=1;
+$pdf_mode=1;
+set_tex_cmds('--interaction=nonstopmode -file-line-error -synctex=1 %O %S');
+print("Hello, world!  I'm a .latexmkrc\n");

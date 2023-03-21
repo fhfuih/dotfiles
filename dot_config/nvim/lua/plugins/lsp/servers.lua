@@ -1,4 +1,5 @@
 -- mason = boolean: whether executable should be managed by mason or by me
+local util = require("lspconfig.util")
 return {
   jsonls = {},
   lua_ls = {
@@ -14,7 +15,13 @@ return {
     },
   },
   pylsp = {},
-  tsserver = {},
+  tsserver = {
+    root_dir = function(fname)
+      return util.root_pattern("tsconfig.json")(fname)
+        or util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
+        or util.root_pattern("app.json")(fname)
+    end,
+  }, -- tsserver is configured by tsconfig.json or jsconfig.json
   texlab = {
     settings = {
       texlab = {
@@ -57,6 +64,7 @@ return {
             ["\\eg"] = "dummy",
             ["\\ie"] = "dummy",
             ["\\aka"] = "dummy",
+            ["\\etc"] = "dummy",
           },
         },
         checkFrequency = "save",

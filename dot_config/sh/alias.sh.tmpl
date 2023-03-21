@@ -6,23 +6,29 @@ alias p="ALL_PROXY=socks5://localhost:7890"
 alias s="kitty +kitten ssh"
 
 # Programs
+# git
 alias ga='git add'
 alias gc='git commit'
 alias gca='git commit --amend'
 alias gr='git rebase'
 alias gs='git status'
+alias gd='git diff'
 alias clone='git clone'
-alias down='git push'
-alias up='git pull'
+alias pull='git pull'
+alias push='git push'
 alias fuckyou='git push -f'
 alias fuckme='git pull -f'
 alias gig='git-ignore'
 alias lg='lazygit'
 
+# neovim
 alias lvim="XDG_CONFIG_HOME=$HOME/.neovim-distro/lazyvim nvim"
 alias avim="XDG_CONFIG_HOME=$HOME/.neovim-distro/astronvim nvim"
+
+# ripgrep
 alias pdfrg='rg --pre pdf-pre-rg'
 
+# chezmoi
 alias cz='chezmoi'
 alias cza='chezmoi add'
 alias czp='chezmoi apply'
@@ -32,4 +38,14 @@ alias czg='chezmoi git'
 alias czfuck='chezmoi re-add'
 function czc() {
   cd $(chezmoi source-path)
+}
+
+# tex
+function texdoc() {
+  {{ if eq .chezmoi.os "darwin" -}}
+  open
+  {{- else -}}
+  xdg-open
+  {{- end }} \
+    "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
 }

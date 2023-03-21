@@ -156,23 +156,17 @@ return function(_, _)
 
   ViMode = utils.surround({ " ", "" }, "bright_bg", { ViMode, Snippets })
 
-  local FileName = {
-    provider = function(self)
-      -- first, trim the pattern relative to the current directory. For other
-      -- options, see :h filename-modifers
-      local filename = vim.fn.fnamemodify(self.filename, ":.")
-      if filename == "" then
-        return "[No Name]"
-      end
-      -- now, if the filename would occupy more than 1/4th of the available
-      -- space, we trim the file path to its initials
-      -- See Flexible Components section below for dynamic truncation
-      if not conditions.width_percent_below(#filename, 0.25) then
-        filename = vim.fn.pathshorten(filename)
-      end
-      return filename
+  FileName = require("plugins.ui.statusline.filename")()
+
+  local Recording = {
+    condition = function()
+      return vim.fn.reg_recording() ~= ""
     end,
-    hl = { fg = utils.get_highlight("Directory").fg },
+    update = { "RecordingEnter", "RecordingLeave" },
+    provider = function()
+      return " " .. vim.fn.reg_recording()
+    end,
+    hl = { fg = "red" },
   }
 
   local Indent = {
@@ -203,6 +197,8 @@ return function(_, _)
     hl = { fg = utils.get_highlight("Type").fg, bold = true },
   }
 
+  local LSPBlock = require("plugins.ui.statusline.lsp")()
+
   local FileEncoding = {
     provider = function()
       local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
@@ -223,30 +219,12 @@ return function(_, _)
     -- %L = number of lines in the buffer
     -- %c = column number
     -- %P = percentage through file of displayed window
-    provider = "%l/%L%:%c",
+    provider = "%l/%L:%c",
   }
 
   -- local TSActive ={
   --   -- condition = conditions.
   -- }
-
-  local LSPActive = {
-    condition = conditions.lsp_attached,
-    update = { "LspAttach", "LspDetach" },
-
-    -- You can keep it simple,
-    -- provider = " [LSP]",
-
-    -- Or complicate things a bit and get the servers names
-    provider = function()
-      local names = {}
-      for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-        table.insert(names, server.name)
-      end
-      return " [" .. table.concat(names, " ") .. "]"
-    end,
-    hl = { fg = "green", bold = true },
-  }
 
   -- I personally use it only to display progress messages!
   -- See lsp-status/README.md for configuration options.
@@ -403,16 +381,17 @@ return function(_, _)
     Space,
     Diagnostics,
     Align,
+    Recording,
     -- Navic,
     -- DAPMessages,
     Align,
-    LSPActive,
-    Space,
     -- LSPMessages,
     -- Space,
     -- UltTest,
     -- Space,
     FileType,
+    Space,
+    LSPBlock,
     Space,
     Indent,
     FileEncoding,

@@ -4,17 +4,11 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     lazy = false,
-    -- cmd = "Neotree",
-    -- keys = {
-    --   {
-    --     "<leader>e",
-    --     "<cmd>Neotree toggle<CR>",
-    --     desc = "Explorer NeoTree (cwd)",
-    --   },
-    -- },
-    -- deactivate = function()
-    --   vim.cmd([[Neotree close]])
-    -- end,
+    cmd = "Neotree",
+    keys = keymaps["neo-tree"].lazy,
+    deactivate = function()
+      vim.cmd([[Neotree close]])
+    end,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
       if vim.fn.argc() == 1 then
@@ -117,6 +111,19 @@ return {
     },
   },
   {
+    "olimorris/persisted.nvim",
+    enabled = false,
+    lazy = false,
+    opts = {
+      save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/persisted/"),
+    },
+  },
+  -- {
+  --   "max397574/better-escape.nvim",
+  --   config = true,
+  --   event = "InsertEnter",
+  -- },
+  {
     "folke/todo-comments.nvim",
     cmd = {
       "TodoQuickFix",
@@ -128,6 +135,24 @@ return {
     config = true,
     -- stylua: ignore
     keys = keymaps["todo-comments"].lazy,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = true,
+    -- keys = {
+    --   [[<c-\>]],
+    -- },
+    -- cmd = {
+    --   "ToggleTerm",
+    --   "ToggleTermToggleAll",
+    --   "TermExec",
+    --   "ToggleTermSendCurrentLine",
+    --   "ToggleTermSendVisualLines",
+    --   "ToggleTermSendVisualSelection",
+    --   "ToggleTermSetName",
+    -- },
+    event = "VeryLazy",
   },
   {
     "Darazaki/indent-o-matic",

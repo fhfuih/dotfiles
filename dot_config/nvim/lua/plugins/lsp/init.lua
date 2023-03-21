@@ -78,11 +78,11 @@ return {
       local nls = require("null-ls")
       return {
         sources = {
-          nls.builtins.formatting.stylua, --.with({
-          --   condition = function(utils)
-          --     return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
-          --   end,
-          -- }),
+          nls.builtins.formatting.stylua.with({
+            condition = function(utils)
+              return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
+            end,
+          }),
           nls.builtins.code_actions.refactoring,
         },
       }

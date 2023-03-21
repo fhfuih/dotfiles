@@ -1,3 +1,9 @@
 [".vim/pack/tpope/start/vim-sensible"]
     type = "git-repo"
     url = "https://github.com/tpope/vim-sensible.git"
+[".neovim-distro/astronvim"]
+    type = "git-repo"
+    url = "https://github.com/AstroNvim/AstroNvim"
+    [".neovim-distro/astronvim".pull]
+        args = ["--depth 1"]
+

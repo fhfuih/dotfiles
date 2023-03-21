@@ -10,3 +10,4 @@ vibrotactile
 electromyograms
 adaptively
 distractive
+conative

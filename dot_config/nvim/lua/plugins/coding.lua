@@ -103,6 +103,7 @@ return {
   -- indent guides and indent textobjects
   {
     "echasnovski/mini.indentscope",
+    enabled = false,
     event = { "BufReadPre", "BufNewFile" },
     opts = function(_, _)
       return {
@@ -120,5 +121,16 @@ return {
       })
       require("mini.indentscope").setup(opts)
     end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      -- char = "│",
+      filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
+      show_trailing_blankline_indent = false,
+      show_current_context = true,
+      show_current_context_start = true,
+    },
   },
 }

@@ -22,17 +22,26 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # autocompletion >>>
+
+# brew
 if type brew &>/dev/null
 then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
+# pip
 __pip_setup="$('pip' 'completion' '--zsh' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__pip_setup"
 fi
 
+# tabtab source for packages
+# Used by: pnpm
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# my pinyin completion
 # complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
+
 # <<<
 
 # This must go after completion configs

@@ -2,6 +2,76 @@ local M = {}
 
 M.root_patterns = { ".git", "lua" }
 
+-- window {{{
+
+function M.is_top(nr)
+  nr = nr or 0
+  local pos = vim.fn.win_screenpos(nr)
+  local tab = vim.o.showtabline
+  local top = (tab == 2 or (tab == 1 and vim.fn.tabpagenr("$"))) and 2 or 1
+  return pos[1] == top
+end
+
+function M.is_bottom(nr)
+  nr = nr or 0
+  local row = vim.fn.win_screenpos(nr)[1]
+  local height = vim.fn.winheight(nr)
+  local bottom = vim.o.lines
+  if vim.opt.laststatus >= 2 then
+    bottom = bottom - 1
+  end
+  return row + height - 1 >= bottom
+end
+
+function M.is_left(nr)
+  nr = nr or 0
+  local col = vim.fn.win_screenpos(nr)[2]
+  return col == 1
+end
+
+function M.is_right(nr)
+  nr = nr or 0
+  local col = vim.fn.win_screenpos(nr)[2]
+  local width = vim.fn.winwidth(nr)
+  return col + width - 1 >= vim.o.columns
+end
+
+function M.move_left()
+  if M.is_left() then
+    vim.cmd.tabprevious()
+  else
+    vim.cmd.wincmd("h")
+  end
+end
+
+function M.move_right()
+  if M.is_right() then
+    vim.cmd.tabnext()
+  else
+    vim.cmd.wincmd("l")
+  end
+end
+
+function M.move_up()
+  if M.is_top() then
+    vim.cmd.tabprevious()
+  else
+    vim.cmd.wincmd("k")
+  end
+end
+
+function M.move_down()
+  if M.is_top() then
+    vim.cmd.tabnext()
+  else
+    vim.cmd.wincmd("j")
+  end
+end
+
+-- }}}
+
+-- lazy {{{
+
 ---@param name string
 function M.opts(name)
   local plugin = require("lazy.core.config").plugins[name]
@@ -16,6 +86,8 @@ end
 function M.has(plugin)
   return require("lazy.core.config").plugins[plugin] ~= nil
 end
+
+-- }}}
 
 -- telescope {{{
 
