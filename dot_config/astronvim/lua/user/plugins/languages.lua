@@ -35,9 +35,9 @@ return {
       g.vimtex_quickfix_enabled = 0
       -- Completion: use LSP, not VimTeX
       -- -- (because of cmp-omni bug, cannot connect omni suggestions from VimTeX to cmp)
-      g.vimtex_complete_enabled = 0 -- disable completion. Use lsp
+      g.vimtex_complete_enabled = 0
       -- Fold: use VimTeX, not TS
-      g.imtex_fold_enabled = 1
+      g.vimtex_fold_enabled = 1
       -- Configure conceals
       g.vimtex_syntax_conceal = {
         ligatures = 0,
