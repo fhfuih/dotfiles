@@ -14,7 +14,7 @@
 - [ ] ./nvim/lua/plugins/lsp/server-setup.lua
 - [ ] ./nvim/lua/plugins/lsp/servers.lua
 - [ ] ./nvim/lua/plugins/lua.lua
-- [ ] ./nvim/lua/plugins/treesitter.lua
+- [x] ./nvim/lua/plugins/treesitter.lua
 - [ ] ./nvim/lua/plugins/ui/header.lua
 - [ ] ./nvim/lua/plugins/ui/init.lua
 - [ ] ./nvim/lua/plugins/ui/statusline/filename.lua
