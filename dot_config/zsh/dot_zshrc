@@ -5,17 +5,22 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
 # zmodload zsh/zprof
 export HAS_ZSHRC=true
 export IS_INTERACTIVE=true
 export RC="$0"
 alias reload="source $RC"
 
-# zsh-specific functions
+# alias & functions
+source "$HOME/.config/sh/alias.sh"
 function gig() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
+function texdoc() {
+  open "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
+  # or xdg-open ...
+}
 
 # Completion configs
+autoload -U compinit; compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
@@ -24,8 +29,26 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# autocompletion >>>
+# Plugin config
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ -e "${ZINIT_HOME}/zinit.zsh" ]]; then
+    source "${ZINIT_HOME}/zinit.zsh"
+    zinit light zsh-users/zsh-autosuggestions
+    zinit light zdharma-continuum/fast-syntax-highlighting
+    zinit light zdharma-continuum/history-search-multi-word
+    zinit ice depth"1"
+    zinit light romkatv/powerlevel10k
+    # zinit load conda-incubator/conda-zsh-completion
+    # zinit ice depth=1
+    # zinit light jeffreytse/zsh-vi-mode
+    # zinit light wtsnjp/texlive-completions
+    # zinit light laggardkernel/git-ignore
+fi
+# If you source zinit.zsh after compinit, add the following snippet after sourcing zinit.zsh:
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
+# autocompletion >>>
 # brew
 if type brew &>/dev/null
 then
@@ -44,62 +67,25 @@ fi
 
 # my pinyin completion
 # complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
-
 # <<<
 
-# This must go after completion configs
-source "${ZDOTDIR:-${HOME}}/zim-bootstrap.zsh"
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 
-# alias
-source "$HOME/.config/sh/alias.sh"
-
-function texdoc() {
-  open "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
-  # or xdg-open ...
-}
-
-# My own plugin config
-# zinit light zdharma-continuum/history-search-multi-word
-# zinit light zsh-users/zsh-autosuggestions
-# zinit light zdharma-continuum/fast-syntax-highlighting
-# zinit light spaceship-prompt/spaceship-prompt
-# zinit load esc/conda-zsh-completion
-# zinit ice depth=1
-# zinit light jeffreytse/zsh-vi-mode
-# zinit light wtsnjp/texlive-completions
-# zinit light laggardkernel/git-ignore
-
-
-
-# spaceship prompt
-# export SPACESHIP_EXEC_TIME_SHOW=false
-# eval spaceship_vi_mode_enable
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/mambaforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/mambaforge/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# >>> Non-auto-complete software setup
 # >>> brew autojump >>>
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # <<< brew autojump <<<
+# <<<
 
-
+autoload -Uz compinit && compinit
 # autoload -U +X bashcompinit && bashcompinit
+
+# Initialization execution
+[ -f $HOME/venv/bin/activate ] && source $HOME/venv/bin/activate
 
 # zprof
 
+# vim: foldmethod=marker foldmarker=>>>,<<<
+
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
-
-# vim: foldmethod=marker foldmarker=>>>,<<<

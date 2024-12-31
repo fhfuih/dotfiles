@@ -2,9 +2,9 @@ CmdLine {
   -v2
 }
 
-Linker {
-  \nameref \autoref \hyperref # hyperref package
-}
+# Linker {
+#   \nameref \autoref \hyperref # hyperref package
+# }
 
 PostLink = {
   \index # \label in figure is sometimes too cautious

@@ -1,11 +1,18 @@
+# This file only contains alias used in interactive shells!
+
 # File & System
 alias cur="cd OneDrive\\ -\\ HKUST\\ Connect/Curriculum"
-alias p="ALL_PROXY=socks5://localhost:7890"
+alias p="HTTP_PROXY=socks5://localhost:7788 HTTPS_PROXY=socks5://localhost:7788 ALL_PROXY=socks5://localhost:7788"
 
 # Term
 alias s="kitty +kitten ssh"
 
 # Programs
+
+# common tools replaced
+alias cat='bat'
+alias ls='lsd'
+
 # git
 alias ga='git add'
 alias gc='git commit'
@@ -34,6 +41,11 @@ alias czfuck='chezmoi re-add'
 function czc() {
   cd $(chezmoi source-path)
 }
+
+# browsers
+{{ if eq .chezmoi.os "darwin" -}}
+alias msedge="/Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge"
+{{- end }}
 
 # tex
 function texdoc() {

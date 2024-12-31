@@ -6,7 +6,7 @@
 - [ ] ./nvim/lua/plugins/coding.lua
 - [ ] ./nvim/lua/plugins/colorschemes.lua
 - [ ] ./nvim/lua/plugins/debug.lua
-- [ ] ./nvim/lua/plugins/editor.lua
+- [x] ./nvim/lua/plugins/editor.lua
 - [x] ./nvim/lua/plugins/languages.lua
 - [ ] ./nvim/lua/plugins/lsp/format.lua
 - [ ] ./nvim/lua/plugins/lsp/init.lua
