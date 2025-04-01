@@ -1,0 +1,6 @@
+font-family = "Monaspace Argon"
+font-family = "Symbols Nerd Font"
+font-feature = "+calt"
+font-thicken = true
+theme = "dark:ayu,light:flexoki-light"
+unfocused-split-opacity = 0.5

@@ -1,17 +1,27 @@
 # This file only contains alias used in interactive shells!
 
 # File & System
-alias cur="cd OneDrive\\ -\\ HKUST\\ Connect/Curriculum"
 alias p="HTTP_PROXY=socks5://localhost:7788 HTTPS_PROXY=socks5://localhost:7788 ALL_PROXY=socks5://localhost:7788"
 
 # Term
-alias s="kitty +kitten ssh"
+if command -v kitty 2>&1 >/dev/null; then
+    alias ssh="kitty +kitten ssh"
+fi
 
 # Programs
+# Add VS Code
+{{ if eq .chezmoi.os "darwin" -}}
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+{{- end }}
+
 
 # common tools replaced
-alias cat='bat'
-alias ls='lsd'
+if command -v bat 2>&1 >/dev/null; then
+    alias cat='bat'
+fi
+if command -v lsd 2>&1 >/dev/null; then
+    alias ls='lsd'
+fi
 
 # git
 alias ga='git add'
@@ -25,12 +35,17 @@ alias pull='git pull'
 alias push='git push'
 alias fuckyou='git push -f'
 alias fuckme='git pull -f'
+if command -v lazygit 2>&1 >/dev/null; then
 alias lg='lazygit'
+fi
 
 # ripgrep
+if command -v rg 2>&1 >/dev/null; then
 alias pdfrg='rg --pre pdf-pre-rg'
+fi
 
 # chezmoi
+if command -v chezmoi 2&>1 >/dev/null; then
 alias cz='chezmoi'
 alias cza='chezmoi add'
 alias czp='chezmoi apply'
@@ -41,6 +56,7 @@ alias czfuck='chezmoi re-add'
 function czc() {
   cd $(chezmoi source-path)
 }
+fi
 
 # browsers
 {{ if eq .chezmoi.os "darwin" -}}

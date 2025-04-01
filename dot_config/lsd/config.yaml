@@ -1,4 +1,4 @@
 date: 'relative'
 recursion:
   depth: 3
-total-size: true
+total-size: false
