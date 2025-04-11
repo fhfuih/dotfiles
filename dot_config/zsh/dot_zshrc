@@ -85,7 +85,9 @@ export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # <<< brew autojump <<<
 # >>> mise >>>
-eval "$(mise activate zsh)"
+if command -v mise 2&>1 >/dev/null; then
+    eval "$(mise activate zsh)"
+fi
 # <<< mise <<<
 # <<<
 
