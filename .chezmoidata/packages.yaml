@@ -1,0 +1,9 @@
+packages:
+  darwin:
+    brew:
+      - "autojump"
+      - "bat"
+      - fd
+      - fzf
+      - git-lfs
+      - lsd

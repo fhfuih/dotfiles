@@ -38,9 +38,11 @@ if [ -d "/opt/homebrew/opt/openjdk/bin" ]; then
 fi
 
 # qt
+{{ if eq .chezmoi.os "darwin" }}
 qt_path=`find ~/Qt -path '*/macos/bin' -type d -depth 3 | head -n 1` && {
   export PATH="${qt_path}:$PATH"
 }
+{{ end }}
 
 # Default softwares
 if command -v nvim 2>&1 >/dev/null; then
