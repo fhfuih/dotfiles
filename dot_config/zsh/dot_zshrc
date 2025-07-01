@@ -69,6 +69,10 @@ if [ $? -eq 0 ]; then
     eval "$__pip_setup"
 fi
 
+if command -v uv 2>&1 >/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
 # tabtab source for packages
 # Used by: pnpm
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
