@@ -7,6 +7,14 @@ README.md
 .config/chktex/chktexrc
 {{ end }}
 
+{{ if ne .chezmoi.os "darwin" }}
+Library/Application Support/tex-fmt/tex-fmt.toml
+{{ else if ne .chezmoi.os "linux" }}
+.config/tex-fmt/tex-fmt.toml
+{{ else if ne .chezmoi.os "windows" }}
+AppData/Roaming/tex-fmt/tex-fmt.toml
+{{ end }}
+
 {{- if eq .chezmoi.os "windows" }}
 .bash*
 .zshenv

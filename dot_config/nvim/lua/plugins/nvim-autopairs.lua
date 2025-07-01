@@ -1,21 +1,36 @@
+---@type LazySpec
 return {
-  "windwp/nvim-autopairs",
-  config = function(plugin, opts)
-    require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts)
-    local Rule = require "nvim-autopairs.rule"
-    local npairs = require "nvim-autopairs"
-    local cond = require "nvim-autopairs.conds"
+  {
+    "windwp/nvim-autopairs",
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
+      local npairs = require("nvim-autopairs")
+      local Rule = require("nvim-autopairs.rule")
+      local cond = require("nvim-autopairs.conds")
+      npairs.add_rules({
+        -- Rule("$$", "$$", { "tex", "latex" }),
+        Rule("$", "$", { "tex", "latex" }):with_pair(cond.not_after_text("\\")),
+        Rule("`", "'", { "tex", "latex" }):with_pair(cond.not_after_text("\\")),
+      })
+    end,
+  },
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+    config = function(_, opts)
+      LazyVim.mini.pairs(opts)
 
-    -- Change tex backtick
-    for _, backtick_rules in ipairs(npairs.get_rules "`") do
-      backtick_rules.not_filetypes = { "tex", "latex" }
-    end
-    npairs.add_rules {
-      Rule("`", "'", { "tex", "latex" }),
-      Rule("\\(", "\\)", { "tex", "latex" }),
-      Rule("\\[", "\\]", { "tex", "latex" }),
-    }
-
-    -- tex math surroundings
-  end,
+      -- TeX file brakets
+      local MiniPairs = require("mini.pairs")
+      local map_tex = function()
+        MiniPairs.unmap_buf(0, "i", "`", "``")
+        MiniPairs.unmap_buf(0, "i", "'", "''")
+        MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$", neigh_pattern = "[^\\]." })
+        MiniPairs.map_buf(0, "i", "`", { action = "open", pair = "`'", neigh_pattern = "[^\\]." })
+        MiniPairs.map_buf(0, "i", "'", { action = "close", pair = "`'", neigh_pattern = "[^\\]." })
+      end
+      vim.api.nvim_create_autocmd("FileType", { pattern = "tex", callback = map_tex })
+    end,
+  },
 }

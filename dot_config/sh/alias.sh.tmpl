@@ -45,7 +45,7 @@ alias pdfrg='rg --pre pdf-pre-rg'
 fi
 
 # chezmoi
-if command -v chezmoi 2&>1 >/dev/null; then
+if command -v chezmoi 2>&1 >/dev/null; then
 alias cz='chezmoi'
 alias cza='chezmoi add'
 alias czp='chezmoi apply'

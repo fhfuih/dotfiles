@@ -59,8 +59,7 @@ autoload -Uz _zinit
 
 # autocompletion >>>
 # brew
-if type brew &>/dev/null
-then
+if command -v brew 2>&1 >/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
@@ -85,7 +84,7 @@ export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # <<< brew autojump <<<
 # >>> mise >>>
-if command -v mise 2&>1 >/dev/null; then
+if command -v mise 2>&1 >/dev/null; then
     eval "$(mise activate zsh)"
 fi
 # <<< mise <<<
