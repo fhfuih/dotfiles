@@ -81,6 +81,7 @@ fi
 # complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
 # <<<
 
+# PATH & envs for interactive shell-only tools
 export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 
 # >>> Non-auto-complete software setup
@@ -99,6 +100,11 @@ autoload -Uz compinit && compinit
 
 # Initialization execution
 [ -f $HOME/venv/bin/activate ] && source $HOME/venv/bin/activate
+
+# Zoxide must be added after compinit is called and to the end of the configuration
+if command -v zoxide 2>&1 >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 # zprof
 

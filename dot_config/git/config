@@ -1,6 +1,10 @@
 [user]
 	name = Huang, Zeyu
-	email = fhfuih@outlook.com
+  email = fhfuih@outlook.com
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = config-github
+[includeIf "hasconfig:remote.*.url:git@github.com:**/**"]
+    path = config-github
 [pull]
 	rebase = true
 [filter "lfs"]
