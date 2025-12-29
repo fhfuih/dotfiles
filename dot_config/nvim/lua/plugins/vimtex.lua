@@ -76,16 +76,43 @@ return {
       -- math mode imaps
       g.vimtex_imaps_leader = "@"
 
-      -- Auto compile LaTeX when VimTex launches
+      -- Compiler
+      g.vimtex_compiler_latexmk = {
+        aux_dir = "",
+        out_dir = "",
+        callback = 1,
+        continuous = 0, -- I don't like continuous mode
+        executable = "latexmk",
+        hooks = {},
+        options = {
+          "-verbose",
+          "-file-line-error",
+          "-synctex=1",
+          "-interaction=nonstopmode",
+        },
+      }
+
       vim.api.nvim_create_augroup("vimtex_config", {})
       vim.api.nvim_create_autocmd("User", {
         group = "vimtex_config",
         pattern = "VimtexEventInitPost",
         callback = function()
+          -- Auto compile LaTeX when VimTex launches
           local vimtex = vim.api.nvim_buf_get_var(0, "vimtex")
           if vimtex.compiler.status and vimtex.compiler.status < 1 then
             vim.cmd("VimtexCompile")
           end
+
+          -- More VimTex mappings
+          vim.keymap.set({ "n", "i", "x" }, "ysc", "<Plug>(vimtex-cmd-create)", {
+            buffer = true,
+          })
+          vim.keymap.set("n", "yse", "<Plug>(vimtex-env-surround-line)", {
+            buffer = true,
+          })
+          vim.keymap.set("x", "yse", "<Plug>(vimtex-env-surround-visual)", {
+            buffer = true,
+          })
         end,
       })
     end,

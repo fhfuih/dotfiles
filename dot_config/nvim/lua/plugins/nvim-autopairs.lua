@@ -16,7 +16,7 @@ return {
     end,
   },
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     enabled = false,
     config = function(_, opts)
       LazyVim.mini.pairs(opts)
