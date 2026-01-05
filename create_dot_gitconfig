@@ -1,0 +1,17 @@
+[url "https://github"]
+	insteadOf = git://github
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.gitconfig-github
+[includeIf "hasconfig:remote.*.url:git@github.com:**"]
+	path = ~/.gitconfig-github
+[credential]
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = gpg
+[pull]
+	rebase = true
+
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
