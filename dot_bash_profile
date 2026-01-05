@@ -4,5 +4,6 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bot
 
 export VISUAL=nvim
 
-complete -C /Users/zeyu/go/bin/gocomplete go
-. "$HOME/.cargo/env"
+if [ -e "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
