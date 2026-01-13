@@ -58,6 +58,11 @@ function czc() {
 }
 fi
 
+# nvidia
+if command -v nvidia-smi 2>&1 >/dev/null; then
+alias nv=nvidia-smi
+fi
+
 # browsers
 {{ if eq .chezmoi.os "darwin" -}}
 alias msedge="/Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge"
