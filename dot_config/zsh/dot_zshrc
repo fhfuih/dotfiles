@@ -69,13 +69,20 @@ if [ $? -eq 0 ]; then
     eval "$__pip_setup"
 fi
 
+# uv
 if command -v uv 2>&1 >/dev/null; then
   eval "$(uv generate-shell-completion zsh)"
 fi
 
-# tabtab source for packages
-# Used by: pnpm
-[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+# pnpm
+if command -v pnpm 2>&1 >/dev/null; then
+  eval `pnpm completion zsh`
+fi
+
+# github cli
+if command -v gh 2&>1 >/dev/null; then
+  eval `gh completion -s zsh`
+fi
 
 # my pinyin completion
 # complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
@@ -83,6 +90,9 @@ fi
 
 # PATH & envs for interactive shell-only tools
 export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+# Google Cloud SDK
+if [ -f "$HOME/.local/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.local/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/.local/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.local/google-cloud-sdk/completion.zsh.inc"; fi
 
 # >>> Non-auto-complete software setup
 # >>> brew autojump >>>
@@ -99,7 +109,11 @@ autoload -Uz compinit && compinit
 # autoload -U +X bashcompinit && bashcompinit
 
 # Initialization execution
-[ -f $HOME/venv/bin/activate ] && source $HOME/venv/bin/activate
+if [ -f $HOME/venv/bin/activate ]; then
+  source $HOME/venv/bin/activate
+elif [ -f $HOME/.venv/bin/activate ]; then
+  source $HOME/.venv/bin/activate
+fi
 
 # Zoxide must be added after compinit is called and to the end of the configuration
 if command -v zoxide 2>&1 >/dev/null; then
@@ -112,3 +126,4 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+

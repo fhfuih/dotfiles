@@ -1,10 +1,11 @@
 [user]
 	name = Huang, Zeyu
-  email = fhfuih@outlook.com
+	email = fhfuih@outlook.com
+	signingkey = 
 [includeIf "hasconfig:remote.*.url:https://github.com/**"]
-    path = config-github
+	path = config-github
 [includeIf "hasconfig:remote.*.url:git@github.com:**/**"]
-    path = config-github
+	path = config-github
 [pull]
 	rebase = true
 [filter "lfs"]
@@ -14,6 +15,22 @@
 	required = true
 [core]
 	pager = delta
+
+# https://git-scm.com/docs/gitcredentials#_configuration_options
+[credential]
+	helper =
+	helper = {{ if eq .chezmoi.os "darwin" }}osxkeychain{{ else if eq .chezmoi.os "windows" }}wincred{{ else }}libsecret{{ end }}
+	helper = manager
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[credential "https://git.overleaf.com"]
+	provider = generic
+
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
 
 [interactive]
 	diffFilter = delta --color-only --features=interactive
@@ -32,11 +49,3 @@
 	hunk-header-file-style = red
 	hunk-header-line-number-style = "#067a00"
 	hunk-header-style = file line-number syntax
-[credential]
-	helper = store
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
-[credential "https://git.overleaf.com"]
-	provider = generic

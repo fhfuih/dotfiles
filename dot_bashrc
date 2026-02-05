@@ -1,3 +1,78 @@
+# Shell
+# prompt
+if [ ! -e "$HOME/.local/bin/oh-my-posh" ]; then
+  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
+fi
+eval "$($HOME/.local/bin/oh-my-posh init bash --config ~/.config/oh-my-posh/config.json)"
+# syntax
+if [ ! -e "$HOME/.local/share/blesh/ble.sh" ]; then
+  curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf -
+  bash ble-nightly/ble.sh --install ~/.local/share
+  rm -r ble-nightly
+fi
+source -- ~/.local/share/blesh/ble.sh
+
+# alias & functions
+source "$HOME/.config/sh/alias.sh"
+
+# autocompletion >>>
+# brew
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+    done
+  fi
+fi
+
+# pip
+if type pip &>/dev/null; then
+  eval "$(pip completion --bash)"
+fi
+
+if type uv &>/dev/null; then
+  eval "$(uv generate-shell-completion bash)"
+fi
+
+# pnpm
+if command -v pnpm 2>&1 >/dev/null; then
+  eval $(pnpm completion bash)
+fi
+
+# github cli
+if command -v gh 2 &>1 >/dev/null; then
+  eval $(gh completion -s bash)
+fi
+
+# PATH & envs for interactive shell-only tools
+if [ -e "$HOME/Library/Android/sdk/platform-tools" ]; then
+  export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+fi
+if [ -f "$HOME/.local/google-cloud-sdk/path.zsh.inc" ]; then
+  . "$HOME/.local/google-cloud-sdk/path.zsh.inc"
+fi
+if [ -f "$HOME/.local/google-cloud-sdk/completion.zsh.inc" ]; then
+  . "$HOME/.local/google-cloud-sdk/completion.zsh.inc"
+fi
+# Non-auto-complete software setup
+if command -v mise 2>&1 >/dev/null; then
+  eval "$(mise activate bash)"
+fi
 if [ -e "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
+fi
+
+# Dev environment setup
+if [ -f $HOME/venv/bin/activate ]; then
+  source $HOME/venv/bin/activate
+elif [ -f $HOME/.venv/bin/activate ]; then
+  source $HOME/.venv/bin/activate
+fi
+
+# Zoxide must be added to the end of the configuration
+if command -v zoxide 2>&1 >/dev/null; then
+  eval "$(zoxide init bash)"
 fi
