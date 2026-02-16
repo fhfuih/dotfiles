@@ -5,9 +5,15 @@
       "alignment": "left",
       "segments": [
         {
+          "type": "os",
+          "style": "plain",
+          "foreground": "#DDDDDD",
+          "template": "{{.Icon}}  "
+        },
+        {
           "foreground": "#43D426",
           "style": "plain",
-          "template": "{{ .UserName }}{{ if .SSHSession }}<#ff5555>@</><#55ff55>{{ .HostName }}</>{{ end }} ",
+          "template": "{{ if .SSHSession }}{{ .UserName }}<#ff5555>@</><#55ff55>{{ .HostName }}</>{{ end }} ",
           "type": "session"
         },
         {
