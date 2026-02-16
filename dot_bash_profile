@@ -7,3 +7,7 @@ export VISUAL=nvim
 if [ -e "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
+if [ -f "$HOME/.bashrc" ]; then
+  . "$HOME/.bashrc"
+fi

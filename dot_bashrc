@@ -3,7 +3,7 @@
 if [ ! -e "$HOME/.local/bin/oh-my-posh" ]; then
   curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
 fi
-eval "$($HOME/.local/bin/oh-my-posh init bash --config ~/.config/oh-my-posh/config.json)"
+eval "$($HOME/.local/bin/oh-my-posh init bash --config $HOME/.config/oh-my-posh/config.omp.json)"
 # syntax
 if [ ! -e "$HOME/.local/share/blesh/ble.sh" ]; then
   curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf -
