@@ -10,7 +10,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # >>> PATHs
 # home/bin: for miktex
 # home/.local/bin: my own binaries are here
-export PATH="~/.local/bin:~/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # homebrew. Do this before `which/comment`ing any command
 if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
