@@ -80,7 +80,7 @@ if command -v pnpm 2>&1 >/dev/null; then
 fi
 
 # github cli
-if command -v gh 2&>1 >/dev/null; then
+if command -v gh 2>&1 >/dev/null; then
   eval `gh completion -s zsh`
 fi
 

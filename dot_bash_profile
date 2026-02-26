@@ -4,6 +4,8 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bot
 
 export VISUAL=nvim
 
+source "$HOME/.config/sh/environment.sh"
+
 if [ -e "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
