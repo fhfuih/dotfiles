@@ -1,0 +1,152 @@
+packages:
+  # base
+  software-properties-common:
+    ubuntu:
+      method: apt
+  debian-archive-keyring:
+    ubuntu:
+      method: apt
+    debian:
+      method: apt
+  mise:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  zsh:
+    debian:
+      method: apt
+  # terminal tools
+  ripgrep:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  ast-grep:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  bat:
+    darwin:
+      method: brew
+    debian:
+      method: apt # > Debian 11 & Ubuntu 20.04
+  fd:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  fzf:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  lsd:
+    darwin:
+      method: brew
+    debian:
+      method: apt # > Ubuntu 23.04 & Debian 12
+  jq:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  tealdeer:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  zoxide:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  aichat:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  # git
+  git-lfs:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  # git-credential-manager:
+  #   darwin:
+  #     method: brew
+  #   ubuntu:
+  #     method: |
+  #       curl -sSfL https://github.com/git-ecosystem/git-credential-manager/releases/download/latest/gcm-linux-x64-${VERSION}.deb -o /tmp/gcm.deb && sudo dpkg -i /tmp/gcm.deb
+  #   debian:
+  #     method: |
+  #       curl -sSfL https://github.com/git-ecosystem/git-credential-manager/releases/download/latest/gcm-linux-x64-${VERSION}.deb -o /tmp/gcm.deb && sudo dpkg -i /tmp/gcm.deb
+  github-cli:
+    darwin:
+      method: brew
+      name: gh
+    debian:
+      method: mise
+  git-delta:
+    darwin:
+      method: brew
+    ubuntu:
+      method: mise
+      name: delta
+    debian:
+      method: mise
+      name: delta
+  # TUI tools
+  lazygit:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  serie:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  neovim:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  # dev
+  ruff:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  uv:
+    darwin:
+      method: brew
+    debian:
+      method: mise
+  golang:
+    darwin:
+      method: brew
+      name: go
+    debian:
+      method: apt
+  # multimedia tools
+  viu:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  imagemagick:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  chafa:
+    darwin:
+      method: brew
+    debian:
+      method: apt
+  # system tools
+  laishulu/homebrew/macism:
+    darwin:
+      method: brew

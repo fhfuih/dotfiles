@@ -1,0 +1,4 @@
+export HAS_ZSHENV=true
+
+source "$HOME/.config/sh/environment.sh"
+export FPATH="$FPATH:$HOME/.zsh_completions"

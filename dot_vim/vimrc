@@ -1,0 +1,5 @@
+set number
+set mouse=nvi
+
+nnoremap <expr>j v:count == 0 ? 'gj' : 'j'
+nnoremap <expr>k v:count == 0 ? 'gk' : 'k'

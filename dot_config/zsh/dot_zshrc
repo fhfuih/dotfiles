@@ -1,0 +1,129 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# zmodload zsh/zprof
+export HAS_ZSHRC=true
+export IS_INTERACTIVE=true
+export RC="$0"
+alias reload="source $RC"
+
+# alias & functions
+source "$HOME/.config/sh/alias.sh"
+function gig() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
+function texdoc() {
+  open "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
+  # or xdg-open ...
+}
+
+# Completion configs
+autoload -U compinit; compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# Plugin config
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ -e "${ZINIT_HOME}/zinit.zsh" ]]; then
+    source "${ZINIT_HOME}/zinit.zsh"
+    zinit light zsh-users/zsh-autosuggestions
+    zinit light zdharma-continuum/fast-syntax-highlighting
+    zinit light zdharma-continuum/history-search-multi-word
+    zinit ice depth"1"
+    zinit light romkatv/powerlevel10k
+    # zinit load conda-incubator/conda-zsh-completion
+    # zinit ice depth=1
+    # zinit light jeffreytse/zsh-vi-mode
+    # zinit light wtsnjp/texlive-completions
+    # zinit light laggardkernel/git-ignore
+fi
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+
+# autocompletion >>>
+# brew
+if command -v brew 2>&1 >/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# pip
+__pip_setup="$('pip' 'completion' '--zsh' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__pip_setup"
+fi
+
+# uv
+if command -v uv 2>&1 >/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+# pnpm
+if command -v pnpm 2>&1 >/dev/null; then
+  eval `pnpm completion zsh`
+fi
+
+# github cli
+if command -v gh 2>&1 >/dev/null; then
+  eval `gh completion -s zsh`
+fi
+
+# my pinyin completion
+# complete -o nospace -C /Users/zeyu/go/bin/gocomplete go
+# <<<
+
+# PATH & envs for interactive shell-only tools
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+# Google Cloud SDK
+if [ -f "$HOME/.local/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.local/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/.local/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.local/google-cloud-sdk/completion.zsh.inc"; fi
+
+# >>> Non-auto-complete software setup
+# >>> brew autojump >>>
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+# <<< brew autojump <<<
+# >>> mise >>>
+if command -v mise 2>&1 >/dev/null; then
+    eval "$(mise activate zsh)"
+fi
+# <<< mise <<<
+# <<<
+
+autoload -Uz compinit && compinit
+# autoload -U +X bashcompinit && bashcompinit
+
+# Initialization execution
+if [ -f $HOME/venv/bin/activate ]; then
+  source $HOME/venv/bin/activate
+elif [ -f $HOME/.venv/bin/activate ]; then
+  source $HOME/.venv/bin/activate
+fi
+
+# Zoxide must be added after compinit is called and to the end of the configuration
+if command -v zoxide 2>&1 >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+# zprof
+
+# vim: foldmethod=marker foldmarker=>>>,<<<
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+

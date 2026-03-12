@@ -1,0 +1,49 @@
+{{- $osKey := .chezmoi.os -}}
+{{- $osKeyFallback := "" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $osKey = .chezmoi.osRelease.id -}}
+{{-   if hasKey .chezmoi.osRelease "idLike" -}}
+{{-     $osKeyFallback = .chezmoi.osRelease.idLike -}}
+{{-   end -}}
+{{- end -}}
+{{- $brewPkgs := list -}}
+{{- $aptPkgs := list -}}
+{{- $misePkgs := list -}}
+{{- range $name, $pkg := .packages -}}
+{{-   $lookupKey := "" -}}
+{{-   if hasKey $pkg $osKey -}}
+{{-     $lookupKey = $osKey -}}
+{{-   else if and $osKeyFallback (hasKey $pkg $osKeyFallback) -}}
+{{-     $lookupKey = $osKeyFallback -}}
+{{-   end -}}
+{{-   if $lookupKey -}}
+{{-     $osPkg := index $pkg $lookupKey -}}
+{{-     $pkgName := $name -}}
+{{-     if hasKey $osPkg "name" -}}
+{{-       $pkgName = $osPkg.name -}}
+{{-     end -}}
+{{-     if eq $osPkg.method "brew" -}}
+{{-       $brewPkgs = append $brewPkgs $pkgName -}}
+{{-     else if eq $osPkg.method "apt" -}}
+{{-       $aptPkgs = append $aptPkgs $pkgName -}}
+{{-     else if eq $osPkg.method "mise" -}}
+{{-       $misePkgs = append $misePkgs $pkgName -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+#!/bin/bash
+set -euo pipefail
+{{ if $brewPkgs }}
+brew install {{ join " " $brewPkgs }}
+{{ end -}}
+{{- if $aptPkgs }}
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y {{ join " " $aptPkgs }} 2>/dev/null || true
+{{ end -}}
+{{- if $misePkgs }}
+{{-   $misePkgsVersioned := list -}}
+{{-   range $misePkgs -}}
+{{-     $misePkgsVersioned = append $misePkgsVersioned (printf "%s@latest" .) -}}
+{{-   end }}
+mise use -g {{ join " " $misePkgsVersioned }}
+{{ end -}}
