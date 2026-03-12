@@ -37,6 +37,7 @@ packages:
       method: brew
     debian:
       method: apt
+      name: fd-find
   fzf:
     darwin:
       method: brew
@@ -106,8 +107,6 @@ packages:
   serie:
     darwin:
       method: brew
-    debian:
-      method: apt
   neovim:
     darwin:
       method: brew
@@ -134,16 +133,12 @@ packages:
   viu:
     darwin:
       method: brew
-    debian:
-      method: apt
   imagemagick:
     darwin:
       method: brew
     debian:
       method: apt
   chafa:
-    darwin:
-      method: brew
     debian:
       method: apt
   # system tools
