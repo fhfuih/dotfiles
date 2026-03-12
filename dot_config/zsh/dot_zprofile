@@ -1,0 +1,25 @@
+export HAS_ZPROFILE=true
+
+# node via fnm
+if command -v fnm >/dev/null; then
+  eval "$(fnm env --shell zsh --fnm-dir="$HOME/.local/share/fnm" --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
+fi
+
+# java
+if command -v java >/dev/null; then
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+fi
+
+# rust
+if [[ -e "$HOME/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
+
+# go
+path+=("$HOME/go/bin")
+
+# ruby
+if command -v ruby >/dev/null && command -v gem >/dev/null; then
+# if { which ruby >/dev/null; } && { which gem >/dev/null; }; then
+    path=("$(ruby -r rubygems -e 'puts Gem.user_dir')/bin" $path)
+fi

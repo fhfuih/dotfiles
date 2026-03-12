@@ -1,0 +1,44 @@
+{{/* This is an ignore file. Predicate is reversed. */}}
+
+README.md
+
+.config/zsh/.zsh_history
+.config/zsh/.zcompdump
+.config/zsh/.zcompcache
+
+.config/nvim/lazy-lock.json
+AppData/Local/nvim/lazy-lock.json
+
+{{/* OS-specific system paths */}}
+{{ if ne .chezmoi.os "windows" }}
+Documents
+AppData
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library
+{{ end }}
+
+{{/* TEX configurations */}}
+{{ if eq .chezmoi.os "windows" }}
+.config/chktex/.chktexrc
+{{ else }}
+.config/chktex/chktexrc
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/tex-fmt/tex-fmt.toml
+{{/* darwin (already ignored) Library/Application Support/tex-fmt/tex-fmt.toml */}}
+{{/* windows (already ignored) AppData/Roaming/tex-fmt/tex-fmt.toml */}}
+{{ end }}
+
+{{/* Skip Linux shell config on Windows */}}
+{{- if eq .chezmoi.os "windows" }}
+.bash*
+.zshenv
+.config/zsh
+.config/sh
+.config/sh
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+.hammerspoon
+{{- end }}

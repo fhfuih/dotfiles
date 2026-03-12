@@ -1,0 +1,13 @@
+export HAS_ZSHENV=true
+
+# Dedupe PATH/FPATH across inherited env and repeated additions
+# (makes path+=/fpath+= idempotent).
+# NOTE: -U only filters on ARRAY assignment, so re-assign path=($path) after
+# environment.sh, whose POSIX `export PATH=...` scalar assignments bypass -U.
+typeset -U path fpath
+
+if [[ -f  "$HOME/.config/sh/environment.sh" ]]; then
+    source "$HOME/.config/sh/environment.sh"
+fi
+path=($path)
+fpath+=("$HOME/.zsh_completions")

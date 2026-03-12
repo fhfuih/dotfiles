@@ -1,0 +1,94 @@
+# This file only contains alias used in interactive shells!
+
+# File & System
+alias p="HTTP_PROXY=socks5://localhost:7890 HTTPS_PROXY=socks5://localhost:7890 ALL_PROXY=socks5://localhost:7890"
+
+# Term
+if command -v kitty >/dev/null 2>&1; then
+    alias ssh="kitty +kitten ssh"
+fi
+
+# common tools replaced
+if command -v bat >/dev/null 2>&1; then
+    alias cat='bat'
+elif command -v batcat >/dev/null 2>&1; then
+    alias bat='batcat'
+    alias cat='batcat'
+fi
+if command -v lsd >/dev/null 2>&1; then
+    alias ls='lsd'
+fi
+
+# git
+alias ga='git add'
+alias gc='git commit'
+alias gca='git commit --amend'
+alias gr='git rebase'
+alias gs='git status'
+alias gd='git diff'
+alias clone='git clone'
+alias pull='git pull'
+alias push='git push'
+alias fuckyou='git push -f'
+alias fuckme='git pull -f'
+if command -v lazygit >/dev/null 2>&1; then
+  alias lg='lazygit'
+fi
+function wtree-clone() {
+  git clone --bare "$@"
+  git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+  git fetch origin
+}
+function wtree-add-remote() {
+  git remote add "$@"
+  for arg in "$@"; do
+    case "$arg" in
+      -*) ;;        # Ignore arguments starting with -
+      *)            # This is the first "legit" non-option argument
+        echo "$arg"
+        git config "remote.${arg}.fetch" "+refs/heads/*:refs/remotes/${arg}/*"
+        git fetch "$arg"
+        break
+        ;;
+    esac
+  done
+}
+
+# ripgrep
+if command -v rg >/dev/null 2>&1; then
+alias pdfrg='rg --pre pdf-pre-rg'
+fi
+
+# chezmoi
+if command -v chezmoi >/dev/null 2>&1; then
+alias cz='chezmoi'
+alias cza='chezmoi add'
+alias czp='chezmoi apply'
+alias cze='chezmoi edit'
+alias czs='chezmoi status'
+alias czg='chezmoi git'
+alias czfuck='chezmoi re-add'
+function czc() {
+  cd $(chezmoi source-path)
+}
+fi
+
+# nvidia
+if command -v nvidia-smi >/dev/null 2>&1; then
+alias nv=nvidia-smi
+fi
+
+# browsers
+{{ if eq .chezmoi.os "darwin" -}}
+alias msedge="/Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge"
+{{- end }}
+
+# tex
+function texdoc() {
+  {{ if eq .chezmoi.os "darwin" -}}
+  open
+  {{- else -}}
+  xdg-open
+  {{- end }} \
+    "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
+}
