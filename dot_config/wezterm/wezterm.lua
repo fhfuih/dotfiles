@@ -5,26 +5,19 @@ local config = wezterm.config_builder()
 local os = package.config:sub(1, 1) == "\\" and "win" or "unix"
 print(os)
 if os == "win" then
+	config.default_prog = { "pwsh.exe", "-NoLogo" }
 	-- set default prog to WSL
-	config.default_domain = "WSL:Ubuntu-25.10"
-	-- local default_wsl = nil
-	-- local handle = io.popen("wsl -l -q")
-	-- if handle ~= nil then
-	-- 	local wsl_list = handle:read("*a")
-	-- 	default_wsl = string.match(wsl_list, "^(.-)\n")
-	-- end
-	-- if default_wsl ~= nil then
-	-- 	config.default_domain = "WSL:" .. default_wsl
-	-- else
-	-- 	config.default_prog = { "pwsh.exe", "-NoLogo" }
-	-- end
+	local wsl_domains = wezterm.default_wsl_domains()
+	local default_domain = wsl_domains[1]
+	if default_domain ~= nil then
+		config.default_domain = default_domain.name
+	end
 end
 
 local color_schemes = {
 	"Bamboo",
 	"Guezwhoz",
-	"Glacier",
-	"GruvboxDarkHard",
+	"Glacier"
 }
 
 local font_families = {
