@@ -27,10 +27,13 @@
 {{-     else if eq $osPkg.method "apt" -}}
 {{-       $aptPkgs = append $aptPkgs $pkgName -}}
 {{-     else if eq $osPkg.method "mise" -}}
-{{-       $misePkgs = append $misePkgs $pkgName -}}
+{{-       $misePkgs = append $misePkgs (printf "%s@latest" $pkgName) -}}
 {{-     end -}}
 {{-   end -}}
 {{- end -}}
+
+{{- if ne .chezmoi.os "windows" -}}
+
 #!/bin/bash
 set -euo pipefail
 {{ if $brewPkgs }}
@@ -41,9 +44,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y {{ join " " $aptPkgs }} 2>/dev/null || true
 {{ end -}}
 {{- if $misePkgs }}
-{{-   $misePkgsVersioned := list -}}
-{{-   range $misePkgs -}}
-{{-     $misePkgsVersioned = append $misePkgsVersioned (printf "%s@latest" .) -}}
-{{-   end }}
-mise use -g {{ join " " $misePkgsVersioned }}
+mise use -g {{ join " " $misePkgs }}
 {{ end -}}
+
+{{- end -}}
