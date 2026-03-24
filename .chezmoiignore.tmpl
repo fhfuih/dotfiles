@@ -1,29 +1,35 @@
+{{/* This is an ignore file. Predicate is reversed. */}}
+
 README.md
 /**/lazy-lock.json
 
-
+{{/* OS-specific system paths */}}
 {{ if ne .chezmoi.os "windows" }}
 Documents
+AppData
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library
 {{ end }}
 
+{{/* TEX configurations */}}
 {{ if eq .chezmoi.os "windows" }}
 .config/chktex/.chktexrc
 {{ else }}
 .config/chktex/chktexrc
 {{ end }}
-
-{{ if ne .chezmoi.os "darwin" }}
-Library/Application Support/tex-fmt/tex-fmt.toml
-{{ else if ne .chezmoi.os "linux" }}
+{{ if ne .chezmoi.os "linux" }}
 .config/tex-fmt/tex-fmt.toml
-{{ else if ne .chezmoi.os "windows" }}
-AppData/Roaming/tex-fmt/tex-fmt.toml
+{{/* darwin (already ignored) Library/Application Support/tex-fmt/tex-fmt.toml */}}
+{{/* windows (already ignored) AppData/Roaming/tex-fmt/tex-fmt.toml */}}
 {{ end }}
 
 {{- if eq .chezmoi.os "windows" }}
 .bash*
 .zshenv
 .config/zsh
+.config/sh
+.config/sh
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}
