@@ -2,8 +2,13 @@ export HAS_ZPROFILE=true
 export IS_LOGIN=true
 
 # homebrew
-if which brew >/dev/null || [ -f /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+if which brew >/dev/null; then
+  BREW="brew"
+elif [[ -f /opt/homebrew/bin/brew ]]; then
+  BREW="/opt/homebrew/bin/brew"
+fi
+if  [[ -v BREW ]]; then
+    eval "$($BREW shellenv)"
     if [ -n "$IS_CHINA" ]; then
         export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
         export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
