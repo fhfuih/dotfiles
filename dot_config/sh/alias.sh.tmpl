@@ -36,8 +36,27 @@ alias push='git push'
 alias fuckyou='git push -f'
 alias fuckme='git pull -f'
 if command -v lazygit 2>&1 >/dev/null; then
-alias lg='lazygit'
+  alias lg='lazygit'
 fi
+function wtree-clone() {
+  git clone --bare "$@"
+  git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+  git fetch origin
+}
+function wtree-add-remote() {
+  git remote add "$@"
+  for arg in "$@"; do
+    case "$arg" in
+      -*) ;;        # Ignore arguments starting with -
+      *)            # This is the first "legit" non-option argument
+        echo "$arg"
+        git config "remote.${arg}.fetch" "+refs/heads/*:refs/remotes/${arg}/*"
+        git fetch "$arg"
+        break
+        ;;
+    esac
+  done
+}
 
 # ripgrep
 if command -v rg 2>&1 >/dev/null; then
