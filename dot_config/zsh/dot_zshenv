@@ -1,4 +1,6 @@
 export HAS_ZSHENV=true
 
-source "$HOME/.config/sh/environment.sh"
+if [[ -f  "$HOME/.config/sh/environment.sh" ]]; then
+    source "$HOME/.config/sh/environment.sh"
+fi
 export FPATH="$FPATH:$HOME/.zsh_completions"

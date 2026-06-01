@@ -12,7 +12,9 @@ export RC="$0"
 alias reload="source $RC"
 
 # alias & functions
-source "$HOME/.config/sh/alias.sh"
+if [[ -f  "$HOME/.config/sh/alias.sh" ]]; then
+    source "$HOME/.config/sh/alias.sh"
+fi
 function gig() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
 function texdoc() {
   open "https://texdoc.org/pkg/${1}" > /dev/null 2>&1
