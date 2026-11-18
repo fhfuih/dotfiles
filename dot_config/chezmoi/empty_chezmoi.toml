@@ -1,6 +1,0 @@
-[edit]
-  apply = true
-  watch = true
-[diff]
-  command = "delta"
-  args = ["{{ .Destination }}", "{{ .Target }}"]

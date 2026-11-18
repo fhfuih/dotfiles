@@ -1,0 +1,452 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Powerlevel10k Lean: place the right-side segments above the input line.
+format = """
+$os$directory$git_branch$git_commit$git_state$git_status\
+$fill\
+$cmd_duration$jobs$direnv$python$conda${custom.python_manager}${custom.node_env}$username$hostname\
+$line_break$character"""
+add_newline = true
+
+[fill]
+symbol = '·'
+style = 'fg:170' # Starship theme purple!
+
+[character]
+success_symbol = '[❯](green)'
+error_symbol = '[❯](red)'
+vimcmd_symbol = '[❮](green)'
+vimcmd_replace_one_symbol = '[▶](green)'
+vimcmd_replace_symbol = '[▶](green)'
+vimcmd_visual_symbol = '[V](green)'
+
+[cmd_duration]
+min_time = 3000
+format = ' [󱎫 $duration](yellow)'
+
+[jobs]
+symbol = ''
+format = ' [$symbol](red)'
+
+[os]
+disabled = false
+format = '$symbol'
+
+[username]
+format = ' [$user]($style)'
+style_user = 'white'
+style_root = 'bold red'
+show_always = false
+
+[package]
+symbol = "󰏗 "
+disabled = true
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = ''
+ahead = '[⇡${count}](green) '
+diverged = '[⇡${ahead_count}⇣${behind_count}](green) '
+behind = '[⇣${count}](green) '
+stashed = '[*${count}](green) '
+untracked = '[?${count}](blue) '
+modified = '[!${count}](yellow) '
+staged = '[+${count}](yellow) '
+deleted = '[-${count}](red) '
+
+[aws]
+symbol = " "
+
+[azure]
+symbol = " "
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰂑 "
+empty_symbol = "󰂎 "
+
+[buf]
+symbol = " "
+
+[bun]
+symbol = " "
+
+[c]
+symbol = " "
+
+[cpp]
+symbol = " "
+
+[cmake]
+symbol = " "
+
+[cobol]
+symbol = " "
+
+[conda]
+symbol = " "
+format = ' [$symbol$environment](cyan)'
+
+[container]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[deno]
+symbol = " "
+
+[direnv]
+disabled = false
+format = ' [$symbol$loaded/$allowed](yellow)'
+symbol = " "
+
+[directory]
+style = 'blue'
+truncation_length = 3
+truncation_symbol = '…/'
+truncate_to_repo = false
+use_os_path_sep = false
+read_only = " 󰌾"
+
+[docker_context]
+symbol = " "
+
+[dotnet]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[erlang]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fortran]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[gcloud]
+symbol = "󱇶 "
+
+[gleam]
+symbol = " "
+
+[git_branch]
+symbol = " "
+style = 'green'
+format = '[$symbol$branch]($style)(:[$remote_branch]($style)) '
+truncation_length = 32
+only_attached = true
+
+[git_commit]
+commit_hash_length = 8
+format = '[@$hash$tag]($style) '
+style = 'green'
+tag_disabled = false
+tag_symbol = ' #'
+
+[git_state]
+style = 'red'
+format = '[$state( $progress_current/$progress_total)]($style) '
+rebase = 'rebase'
+merge = 'merge'
+revert = 'revert'
+cherry_pick = 'cherry-pick'
+bisect = 'bisect'
+am = 'am'
+am_or_rebase = 'am/rebase'
+
+[golang]
+symbol = " "
+
+[gradle]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[helm]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_only = true
+format = '[@$hostname](white)'
+ssh_symbol = " "
+
+[java]
+symbol = " "
+
+# [jj_bookmark]
+# symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[kubernetes]
+symbol = "󱃾 "
+
+[lua]
+symbol = " "
+
+# [maven]
+# symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[mojo]
+symbol = "󰈸 "
+
+[nats]
+symbol = " "
+
+[netns]
+symbol = "󰛳 "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[odin]
+symbol = "󰟢 "
+
+[opa]
+symbol = " "
+
+[openstack]
+symbol = " "
+
+[os.symbols]
+AIX = " "
+AlmaLinux = " "
+Alpaquita = " "
+Alpine = " "
+# ALTLinux = " "
+Amazon = " "
+Android = " "
+AOSC = " "
+Arch = " "
+Artix = " "
+Bluefin = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+# Elementary = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = " "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+# Hurd = " "
+Illumos = " "
+# InstantOS = " "
+# Ios = "󰀷 "
+Kali = " "
+# KDENeon = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = " "
+OpenCloudOS = " "
+openEuler = " "
+openSUSE = " "
+OracleLinux = "󰺡 "
+# PikaOS = " "
+Pop = " "
+Raspbian = " "
+Redhat = "󱄛 "
+RedHatEnterprise = "󱄛 "
+Redox = "󰀘 "
+RockyLinux = " "
+Solus = " "
+SUSE = " "
+Ubuntu = " "
+Ultramarine = " "
+Unknown = " "
+Uos = " "
+Void = " "
+Windows = "󰍲 "
+# Zorin = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[pixi]
+symbol = "󰏗 "
+
+[pulumi]
+symbol = " "
+
+[purescript]
+symbol = " "
+
+[python]
+detect_extensions = []
+detect_files = []
+detect_folders = []
+format = '( [$symbol$virtualenv](cyan))'
+symbol = " "
+
+# Check the shell's selected versions. Project files alone don't trigger these segments.
+[custom.python_manager]
+os = 'unix'
+shell = ['sh']
+when = true
+symbol = ' '
+format = '( [$symbol$output](cyan))'
+command = '''
+[ -z "$VIRTUAL_ENV$CONDA_PREFIX" ] || exit 0
+version=
+if [ -n "$PYENV_VERSION$PYENV_SHELL" ]; then
+    version=$(pyenv version-name 2>/dev/null) || exit 0
+elif [ -n "$MISE_SHELL" ]; then
+    version=$(mise current python 2>/dev/null) || exit 0
+fi
+case $version in
+    ''|system) ;;
+    *) printf '%s\n' "$version" ;;
+esac
+'''
+
+[custom.node_env]
+os = 'unix'
+shell = ['sh']
+when = true
+symbol = ' '
+format = '( [$symbol$output](green))'
+command = '''
+version=
+if [ -n "$NODE_VIRTUAL_ENV" ]; then
+    printf '%s\n' "${NODE_VIRTUAL_ENV##*/}"
+    exit 0
+fi
+if [ -n "$FNM_MULTISHELL_PATH" ]; then
+    version=$(fnm current 2>/dev/null)
+    case $version in none|system) version= ;; esac
+fi
+if [ -z "$version" ] && [ -n "$NVM_BIN" ]; then
+    nvm_version_dir=${NVM_BIN%/bin}
+    version=${nvm_version_dir##*/}
+fi
+if [ -z "$version" ] && [ -n "$NODENV_VERSION$NODENV_SHELL" ]; then
+    version=$(nodenv version-name 2>/dev/null)
+    [ "$version" != system ] || version=
+fi
+if [ -z "$version" ] && [ -n "$MISE_SHELL" ]; then
+    version=$(mise current node 2>/dev/null)
+fi
+case $version in
+    ''|system) ;;
+    *) printf '%s\n' "$version" ;;
+esac
+'''
+
+[raku]
+symbol = "󱖊 "
+
+[red]
+symbol = "󱍼 "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = "󱘗 "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = "󰹍 "
+
+[singularity]
+symbol = " "
+
+[solidity]
+symbol = " "
+
+[spack]
+symbol = " "
+
+[status]
+symbol = " "
+
+[sudo]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[terraform]
+symbol = " "
+
+[vlang]
+symbol = " "
+
+[typst]
+symbol = " "
+
+[vagrant]
+symbol = " "
+
+[xmake]
+symbol = " "
+
+[zig]
+symbol = " "
+

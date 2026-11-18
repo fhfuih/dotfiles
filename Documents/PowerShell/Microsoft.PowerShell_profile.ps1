@@ -8,7 +8,9 @@ $env:XDG_CACHE_HOME = "$HOME/.cache"
 $env:Path = "$HOME\.local\bin;$env:Path"
 
 # Shell
-Invoke-Expression (&starship init powershell)
+if ($env:TERM -ne "dumb") {
+    Invoke-Expression (&starship init powershell)
+}
 
 # Completions
 Import-Module posh-git
