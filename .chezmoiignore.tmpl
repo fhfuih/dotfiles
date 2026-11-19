@@ -17,8 +17,18 @@ AppData
 {{ if ne .chezmoi.os "darwin" }}
 Library
 {{ end }}
+{{ if ne .chezmoi.os "linux" }}
+{{ end }}
 
-{{/* TEX configurations */}}
+{{/* Skip macOS/Linux shell config on Windows */}}
+{{- if eq .chezmoi.os "windows" }}
+.bash*
+.zshenv
+.config/zsh
+.config/sh
+{{- end }}
+
+{{/* TEX */}}
 {{ if eq .chezmoi.os "windows" }}
 .config/chktex/.chktexrc
 {{ else }}
@@ -29,15 +39,6 @@ Library
 {{/* darwin (already ignored) Library/Application Support/tex-fmt/tex-fmt.toml */}}
 {{/* windows (already ignored) AppData/Roaming/tex-fmt/tex-fmt.toml */}}
 {{ end }}
-
-{{/* Skip Linux shell config on Windows */}}
-{{- if eq .chezmoi.os "windows" }}
-.bash*
-.zshenv
-.config/zsh
-.config/sh
-.config/sh
-{{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon
